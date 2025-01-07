@@ -21,6 +21,11 @@ function ProfilePage() {
   const [isEditing, setISEditing] = useState(false);
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Cena");
+  const [email, setEmail] = useState("abc@gmail.com");
+  const [number, setNumber] = useState("******");
+  const [country, setCountry] = useState("Pakistan");
+  const [city, setCity] = useState("MirpurKhas");
+  const [postalcode, setPostalCode] = useState("69000");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -130,21 +135,47 @@ function ProfilePage() {
                   )}
                 </Typography>
               </TableCell>
-              <TableCell>
+              {/* <TableCell>
                 <Typography>
                   Date of Birth <br /> <b>04-09-2002</b>
                 </Typography>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
             <TableRow>
               <TableCell>
                 <Typography>
-                  Email <br /> <b>wasaychohan613@gmail.com</b>
+                  Email <br />
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      required
+                      name="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <b>{email}</b>
+                  )}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography>
-                  Phone <br /> <b>***********</b>
+                  Phone <br />{" "}
+                  {isEditing ? (
+                    <input
+                      type="number"
+                      required
+                      name="number"
+                      value={number}
+                      onChange={(e) => {
+                        setNumber(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <b> {number} </b>
+                  )}
                 </Typography>
               </TableCell>
               <TableCell>
@@ -158,11 +189,16 @@ function ProfilePage() {
       </DashboardCard>
 
       <Divider sx={{ my: 2 }} />
-      <Box sx={{ textAlign: "end" }}>
-        <Button color="primary" variant="contained" size="large">
-          Edit
+      {/* <Box sx={{ textAlign: "end" }}>
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          onClick={toggleEditing}
+        >
+          {isEditing ? "Save" : "Edit"} Address
         </Button>
-      </Box>
+      </Box> */}
 
       <DashboardCard title="Address">
         <Table>
@@ -170,17 +206,50 @@ function ProfilePage() {
             <TableRow>
               <TableCell>
                 <Typography>
-                  Country <br /> <b>Pakistan</b>
+                  Country <br />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={country}
+                      onChange={(e) => {
+                        setCountry(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <b> {country} </b>
+                  )}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography>
-                  City <br /> <b>MirpurKhas</b>
+                  City <br />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={city}
+                      onChange={(e) => {
+                        setCountry(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <b> {city} </b>
+                  )}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography>
-                  Postal Code <br /> <b>69000</b>
+                  Postal Code <br />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={postalcode}
+                      onChange={(e) => {
+                        setPostalCode(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <b> {postalcode} </b>
+                  )}
                 </Typography>
               </TableCell>
             </TableRow>
