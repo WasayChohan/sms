@@ -2,44 +2,67 @@
 import { Typography } from "@mui/material";
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-const CreateUser = () => {
-  const [user, setUser] = useState({
-    first_name: "",
-    last_name: "",
-    father_name: "",
-    phone: null,
-    email: "",
-    password: "",
-    gender: null,
-    region_id: "",
-    address: "",
-    last_school: "",
-    city_id: null,
-  });
+const Update = () => {
+  const [user, setUser] = useState([]);
+  const { id } = useParams();
+  // console.log(id);
 
-  // const router = useRouter();
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = () => {
+    axios.get(`http://localhost:8800/users/ ${id}`).then(function (res) {
+      console.log(res.data[0]);
+      setUser(res.data[0]);
+    });
+  };
+
+  console.log(user);
+
+  // const [user, setUser] = useState({
+  //   first_name: "",
+  //   last_name: "",
+  //   father_name: "",
+  //   phone: null,
+  //   email: "",
+  //   password: "",
+  //   gender: null,
+  //   region_id: "",
+  //   address: "",
+  //   last_school: "",
+  //   city_id: null,
+  // });
 
   const handleChange = (e) => {
-    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser((values) => ({ ...values, [name]: value }));
   };
 
   const router = useRouter();
 
   const handleClick = async (e) => {
     e.preventDefault();
+    // console.log(user);
+    // return;
     try {
-      await axios.post("http://localhost:8800/users", user);
-      router.push("users");
+      await axios
+        .put(`http://localhost:8800/users/update/${id}`, user)
+        .then(function (res) {
+          console.log(res.data);
+          router.push("/layout/users");
+        });
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(user);
+  // console.log(user);
   return (
     <PageContainer title="Sample Page" description="this is Sample page">
       <DashboardCard title="Sample Page">
@@ -53,6 +76,7 @@ const CreateUser = () => {
                 placeholder="Enter"
                 onChange={handleChange}
                 name="first_name"
+                value={user.first_name}
               />
             </div>
             <div className="form-group col-md-6">
@@ -61,8 +85,9 @@ const CreateUser = () => {
                 type="text"
                 className="form-control"
                 placeholder="Enter "
-                onChange={handleChange}
+                // onChange={handleChange}
                 name="last_name"
+                value={user.last_name}
               />
             </div>
           </div>
@@ -75,6 +100,7 @@ const CreateUser = () => {
                 placeholder="Enter"
                 onChange={handleChange}
                 name="father_name"
+                value={user.father_name}
               />
             </div>
             <div className="form-group col-md-6">
@@ -85,6 +111,7 @@ const CreateUser = () => {
                 placeholder="Phone"
                 onChange={handleChange}
                 name="phone"
+                value={user.phone}
               />
             </div>
           </div>
@@ -96,6 +123,7 @@ const CreateUser = () => {
                 className="form-control"
                 onChange={handleChange}
                 name="email"
+                value={user.email}
               />
             </div>
             <div className="form-group col-md-6">
@@ -106,6 +134,7 @@ const CreateUser = () => {
                 placeholder="Password"
                 onChange={handleChange}
                 name="password"
+                value={user.password}
               />
             </div>
           </div>
@@ -116,6 +145,7 @@ const CreateUser = () => {
                 className="form-control"
                 onChange={handleChange}
                 name="gender"
+                value={user.gender}
               >
                 <option>Select</option>
                 <option>Male</option>
@@ -130,6 +160,7 @@ const CreateUser = () => {
                 placeholder="Enter "
                 onChange={handleChange}
                 name="region_id"
+                value={user.region_id}
               />
             </div>
           </div>
@@ -141,6 +172,7 @@ const CreateUser = () => {
               placeholder="1234 Main St"
               onChange={handleChange}
               name="address"
+              value={user.address}
             />
           </div>
           <div className="form-group">
@@ -151,6 +183,7 @@ const CreateUser = () => {
               placeholder="1234 Main St"
               onChange={handleChange}
               name="last_school"
+              value={user.last_school}
             />
           </div>
 
@@ -162,13 +195,14 @@ const CreateUser = () => {
                 className="form-control"
                 onChange={handleChange}
                 name="city_id"
+                value={user.city_id}
               />
             </div>
           </div>
 
           {/* <div className="form-group"></div> */}
           <button className="btn btn-primary" onClick={handleClick}>
-            Add
+            Update
           </button>
         </form>
       </DashboardCard>
@@ -176,4 +210,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default Update;
