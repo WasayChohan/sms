@@ -36,58 +36,121 @@ function Users() {
 
   return (
     <PageContainer title="Sample Page" description="This is Sample Page">
-      <DashboardCard title="ADD USERS">
+      <DashboardCard title="Add User">
         <div>
-          <div style={{ marginBottom: "20px" }}>
+          <div className="mb-3">
             <Link href="/layout/createUser">
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn "
+                style={{
+                  padding: "10px 15px",
+                  fontSize: "14px",
+                  borderRadius: "4px",
+                  background: "#5D87FF",
+                  color: "#ffffff",
+                }}
+              >
                 Add User
               </button>
             </Link>
           </div>
+
           {users.length > 0 ? (
             <div className="table-responsive">
               <table className="table table-striped">
-                <thead>
+                <thead className="table-light">
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Father</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Region</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Last School</th>
-                    <th scope="col">City</th>
+                    {[
+                      "ID",
+                      "First Name",
+                      "Last Name",
+                      "Father Name",
+                      "Phone",
+                      "Email",
+                      "Password",
+                      "Gender",
+                      "Region",
+                      "Address",
+                      "Last School",
+                      "City",
+                      "Actions",
+                    ].map((heading, index) => (
+                      <th
+                        key={index}
+                        style={{
+                          padding: "8px 12px",
+                          textAlign: "center",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {heading}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((user, index) => (
-                    <tr key={index}>
-                      <th scope="row">{user.id}</th>
-                      <td>{user.first_name}</td>
-                      <td>{user.last_name}</td>
-                      <td>{user.father_name}</td>
-                      <td>{user.phone}</td>
-                      <td>{user.email}</td>
-                      <td>{user.password}</td>
-                      <td>{user.gender}</td>
-                      <td>{user.region_id}</td>
-                      <td>{user.address}</td>
-                      <td>{user.last_school}</td>
-                      <td>{user.city_id}</td>
-
-                      <td style={{ display: "flex" }}>
-                        <button type="button" className="btn btn-info">
-                          <Link href={`users/${user.id}`}>Edit</Link>
+                    <tr
+                      key={index}
+                      style={{
+                        backgroundColor:
+                          index % 2 === 0 ? "#f9f9f9" : "#ffffff",
+                      }}
+                    >
+                      <td style={{ padding: "8px 12px", whiteSpace: "nowrap" }}>
+                        {
+                          // user.id
+                          index + 1
+                        }
+                      </td>
+                      <td style={{ padding: "8px 12px" }}>{user.first_name}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.last_name}</td>
+                      <td style={{ padding: "8px 12px", whiteSpace: "nowrap" }}>
+                        {user.father_name}
+                      </td>
+                      <td style={{ padding: "8px 12px" }}>{user.phone}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.email}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.password}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.gender}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.region_id}</td>
+                      <td style={{ padding: "8px 12px" }}>{user.address}</td>
+                      <td style={{ padding: "8px 12px" }}>
+                        {user.last_school}
+                      </td>
+                      <td style={{ padding: "8px 12px" }}>{user.city_id}</td>
+                      <td style={{ padding: "8px 12px", display: "flex" }}>
+                        <button
+                          type="button"
+                          style={{
+                            backgroundColor: "#17a2b8",
+                            color: "#fff",
+                            border: "none",
+                            padding: "5px 10px",
+                            fontSize: "14px",
+                            cursor: "pointer",
+                            borderRadius: "4px",
+                            marginRight: "10px",
+                          }}
+                        >
+                          <Link
+                            href={`users/${user.id}`}
+                            style={{ color: "#fff", textDecoration: "none" }}
+                          >
+                            Edit
+                          </Link>
                         </button>
                         <button
                           type="button"
-                          className="btn btn-danger"
-                          // style={{ marginLeft: "10px" }}
+                          style={{
+                            backgroundColor: "#dc3545",
+                            color: "#fff",
+                            border: "none",
+                            padding: "5px 10px",
+                            fontSize: "14px",
+                            cursor: "pointer",
+                            borderRadius: "4px",
+                          }}
                           onClick={() => handleDelete(user.id)}
                         >
                           Delete
@@ -99,7 +162,7 @@ function Users() {
               </table>
             </div>
           ) : (
-            <p>No users found.</p>
+            <p className="text-center mt-3">No users found.</p>
           )}
         </div>
       </DashboardCard>
