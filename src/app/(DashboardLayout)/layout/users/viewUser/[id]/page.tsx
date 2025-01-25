@@ -7,8 +7,22 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Divider,
+  Button,
+  IconButton,
+  Avatar,
+  Box,
+} from "@mui/material";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+
 const ViewUpdate = () => {
   const [user, setUser] = useState([]);
+
   const { id } = useParams();
   // console.log(id);
 
@@ -66,164 +80,101 @@ const ViewUpdate = () => {
   // console.log(user);
   return (
     <PageContainer title="Sample Page" description="this is Sample page">
-      <DashboardCard title="Sample Page">
-        <div>
-          <div className="row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Fisrt Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter"
-                // onChange={handleChange}
-                name="first_name"
-                value={user.first_name}
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="inputPassword4">Last Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter "
-                // onChange={handleChange}
-                name="last_name"
-                value={user.last_name}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Father / Guardian Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter"
-                // onChange={handleChange}
-                name="father_name"
-                value={user.father_name}
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Phone</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Phone"
-                // onChange={handleChange}
-                name="phone"
-                value={user.phone}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputEmail4">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                // onChange={handleChange}
-                name="email"
-                value={user.email}
-              />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="inputPassword4">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Password"
-                // onChange={handleChange}
-                name="password"
-                value={user.password}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputState">Gender</label>
-              <select
-                className="form-control"
-                // onChange={handleChange}
-                name="gender"
-                value={user.gender}
-              >
-                <option>Select</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="inputPassword4">Region</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Enter "
-                // onChange={handleChange}
-                name="region_id"
-                value={user.region_id}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputAddress">Address</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="1234 Main St"
-              // onChange={handleChange}
-              name="address"
-              value={user.address}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputAddress">Last School Attend</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="1234 Main St"
-              // onChange={handleChange}
-              name="last_school"
-              value={user.last_school}
-            />
-          </div>
-
-          <div className="row">
-            <div className="form-group col-md-6">
-              <label htmlFor="inputCity">City</label>
-              <input
-                type="number"
-                className="form-control"
-                onChange={handleChange}
-                name="city_id"
-                value={user.city_id}
-              />
-            </div>
-          </div>
-
-          {/* <div className="form-group"></div> */}
-          {/* <button className="btn btn-primary" onClick={handleClick}>
-            Update
-          </button> */}
-
+      <DashboardCard title="View Page">
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Typography>
+                  <label>First Name</label>
+                  <span className="form-control">{user.first_name}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Last Name</label>
+                  <span className="form-control">{user.last_name}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Father / Guardian Name</label>
+                  <span className="form-control">{user.father_name}</span>
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography>
+                  <label>Phone</label>
+                  <span className="form-control">{user.phone}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Email</label>
+                  <span className="form-control">{user.email}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Password</label>
+                  <span className="form-control">{user.password}</span>
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography>
+                  <label>Gender</label>
+                  <span className="form-control">{user.gender}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Region</label>
+                  <span className="form-control">{user.region_id}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>Address</label>
+                  <span className="form-control">{user.address}</span>
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography>
+                  <label>Last School Attend</label>
+                  <span className="form-control">{user.last_school}</span>
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>
+                  <label>City</label>
+                  <span className="form-control">{user.city_id}</span>
+                </Typography>
+              </TableCell>
+            </TableRow>
+          </TableBody>
           <Link href="/layout/users">
             <button
               type="button"
               className="btn "
               style={{
-                position: "relative",
-                left: "1000px",
                 padding: "10px 15px",
                 fontSize: "14px",
                 borderRadius: "4px",
                 background: "#5D87FF",
                 color: "#ffffff",
+                margin: "50px 0 0 15px",
               }}
             >
               Back
             </button>
           </Link>
-        </div>
+        </Table>
       </DashboardCard>
     </PageContainer>
   );

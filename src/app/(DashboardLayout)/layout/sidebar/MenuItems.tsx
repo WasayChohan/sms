@@ -47,6 +47,27 @@ const Menuitems = [
 
   {
     id: uniqueId(),
+    title: "Countries",
+    icon: IconUser,
+    href: "/layout/countries",
+  },
+
+  {
+    id: uniqueId(),
+    title: "States",
+    icon: IconUser,
+    href: "/layout/states",
+  },
+
+  {
+    id: uniqueId(),
+    title: "Cities",
+    icon: IconUser,
+    href: "/layout/cities",
+  },
+
+  {
+    id: uniqueId(),
     title: "Roles",
     icon: IconSettings2,
     href: "/",

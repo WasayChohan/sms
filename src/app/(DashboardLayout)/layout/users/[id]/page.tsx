@@ -5,10 +5,14 @@ import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCa
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Update = () => {
   const [user, setUser] = useState([]);
   const { id } = useParams();
+  const [visible, setVisible] = useState(false);
   // console.log(id);
 
   useEffect(() => {
@@ -65,10 +69,10 @@ const Update = () => {
   // console.log(user);
   return (
     <PageContainer title="Sample Page" description="this is Sample page">
-      <DashboardCard title="Sample Page">
+      <DashboardCard title="Edit User">
         <form>
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputEmail4">Fisrt Name</label>
               <input
                 type="text"
@@ -79,7 +83,7 @@ const Update = () => {
                 value={user.first_name}
               />
             </div>
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputPassword4">Last Name</label>
               <input
                 type="text"
@@ -92,7 +96,7 @@ const Update = () => {
             </div>
           </div>
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputEmail4">Father / Guardian Name</label>
               <input
                 type="text"
@@ -103,7 +107,7 @@ const Update = () => {
                 value={user.father_name}
               />
             </div>
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputEmail4">Phone</label>
               <input
                 type="number"
@@ -116,7 +120,7 @@ const Update = () => {
             </div>
           </div>
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputEmail4">Email</label>
               <input
                 type="email"
@@ -126,7 +130,7 @@ const Update = () => {
                 value={user.email}
               />
             </div>
-            <div className="form-group col-md-6">
+            {/* <div className="form-group col-md-6">
               <label htmlFor="inputPassword4">Password</label>
               <input
                 type="password"
@@ -136,10 +140,41 @@ const Update = () => {
                 name="password"
                 value={user.password}
               />
+            </div> */}
+
+            <div className="form-group col-md-6 position-relative mb-4">
+              <label htmlFor="password">Password</label>
+              <div className="input-wrapper" style={{ position: "relative" }}>
+                <input
+                  type={visible ? "text" : "password"}
+                  className="form-control pr-5"
+                  placeholder="Enter Password"
+                  onChange={handleChange}
+                  name="password"
+                  value={user.password}
+                  style={{
+                    paddingRight: "40px",
+                  }}
+                />
+
+                <div
+                  className="icon-container"
+                  onClick={() => setVisible(!visible)}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                >
+                  {visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                </div>
+              </div>
             </div>
           </div>
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputState">Gender</label>
               <select
                 className="form-control"
@@ -152,7 +187,7 @@ const Update = () => {
                 <option>Female</option>
               </select>
             </div>
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputPassword4">Region</label>
               <input
                 type="number"
@@ -164,7 +199,7 @@ const Update = () => {
               />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="inputAddress">Address</label>
             <input
               type="text"
@@ -175,7 +210,7 @@ const Update = () => {
               value={user.address}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-4">
             <label htmlFor="inputAddress">Last School Attend</label>
             <input
               type="text"
@@ -188,7 +223,7 @@ const Update = () => {
           </div>
 
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-4">
               <label htmlFor="inputCity">City</label>
               <input
                 type="number"
@@ -201,9 +236,42 @@ const Update = () => {
           </div>
 
           {/* <div className="form-group"></div> */}
-          <button className="btn btn-primary" onClick={handleClick}>
-            Update
-          </button>
+          <div
+            style={{
+              display: "flex",
+              gap: "15px",
+              marginTop: "50px",
+            }}
+          >
+            <button
+              style={{
+                padding: "10px 15px",
+                // marginTop: "50px",
+                fontSize: "14px",
+                borderRadius: "4px",
+                background: "#5D87FF",
+                color: "#ffffff",
+                border: "0",
+              }}
+              onClick={handleClick}
+            >
+              Update
+            </button>
+            <Link href="/layout/users">
+              <button
+                style={{
+                  padding: "10px 15px",
+                  fontSize: "14px",
+                  borderRadius: "4px",
+                  background: "#dc3545",
+                  color: "#ffffff",
+                  border: "0",
+                }}
+              >
+                Cancel
+              </button>
+            </Link>
+          </div>
         </form>
       </DashboardCard>
     </PageContainer>
