@@ -52,7 +52,7 @@ const CreateState = () => {
   useEffect(() => {
     const fetchAllCountries = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/countries");
+        const res = await axios.get("http://localhost:8800/api/countries");
         setShowCountry(res.data);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -69,7 +69,7 @@ const CreateState = () => {
     try {
       await validationSchema.validate(state, { abortEarly: false });
       console.log("State Created successfully");
-      await axios.post("http://localhost:8800/states", state);
+      await axios.post("http://localhost:8800/api/states", state);
       console.log(state);
 
       router.push("/layout/states");

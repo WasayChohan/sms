@@ -61,7 +61,9 @@ const CreateCity = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const countryRes = await axios.get("http://localhost:8800/countries");
+        const countryRes = await axios.get(
+          "http://localhost:8800/api/countries"
+        );
         setShowCountry(countryRes.data);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -76,7 +78,7 @@ const CreateCity = () => {
       if (city.country_id) {
         try {
           const stateRes = await axios.get(
-            `http://localhost:8800/states/by-country/${city.country_id}`
+            `http://localhost:8800/api/states/by-country/${city.country_id}`
           );
           console.log("Fetched states:", stateRes.data);
           setShowState(stateRes.data); // Store states in showState
@@ -104,7 +106,10 @@ const CreateCity = () => {
       await validationSchema.validate(city, { abortEarly: false });
 
       // Post the validated city object to the API
-      const response = await axios.post("http://localhost:8800/cities", city);
+      const response = await axios.post(
+        "http://localhost:8800/api/cities",
+        city
+      );
       console.log("City created successfully:", response.data);
 
       // Redirect to the cities page
@@ -208,7 +213,7 @@ const CreateCity = () => {
             >
               Save
             </button>
-            <Link href="/layout/states">
+            <Link href="/layout/cities">
               <button
                 style={{
                   padding: "10px 15px",

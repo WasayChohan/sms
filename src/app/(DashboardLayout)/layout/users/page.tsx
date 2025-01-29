@@ -33,7 +33,7 @@ function Users() {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/users");
+        const res = await axios.get("http://localhost:8800/api/users");
         setUsers(res.data); // Ensure this matches the response structure
       } catch (err) {
         console.error("Error fetching users:", err);
@@ -44,7 +44,7 @@ function Users() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8800/users/${id}`);
+      await axios.delete(`http://localhost:8800/api/users/${id}`);
       setUsers((prev) => prev.filter((user) => user.id !== id));
     } catch (err) {
       console.error("Error deleting user:", err);

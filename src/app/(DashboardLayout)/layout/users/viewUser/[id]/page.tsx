@@ -31,7 +31,7 @@ const ViewUpdate = () => {
   }, []);
 
   const getUser = () => {
-    axios.get(`http://localhost:8800/users/ ${id}`).then(function (res) {
+    axios.get(`http://localhost:8800/api/users/ ${id}`).then(function (res) {
       console.log(res.data[0]);
       setUser(res.data[0]);
     });

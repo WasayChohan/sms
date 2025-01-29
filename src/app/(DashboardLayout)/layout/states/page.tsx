@@ -25,7 +25,7 @@ function States() {
   useEffect(() => {
     const fetchAllStates = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/states");
+        const res = await axios.get("http://localhost:8800/api/states");
         setStates(res.data);
       } catch (err) {
         console.error("Error fetching states:", err);
@@ -38,7 +38,7 @@ function States() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8800/states/${id}`);
+      await axios.delete(`http://localhost:8800/api/states/${id}`);
       setStates((prev) => prev.filter((states) => states.id !== id));
     } catch (err) {
       console.error("Error deleting states:", err);
@@ -48,10 +48,15 @@ function States() {
   const handleToggleStatus = async (id: number, currentStatus: number) => {
     try {
       const newStatus = currentStatus === 0 ? 1 : 0;
+      // console.log(currentStatus);
+      // return;
 
-      await axios.put(`http://localhost:8800/states/is_active/update/${id}`, {
-        is_active: newStatus,
-      });
+      await axios.put(
+        `http://localhost:8800/api/states/is_active/update/${id}`,
+        {
+          is_active: newStatus,
+        }
+      );
 
       setStates((prev) =>
         prev.map((state) =>
@@ -182,7 +187,7 @@ function States() {
           }}
         >
           {" "}
-          states List{" "}
+          States List{" "}
         </h4>
         <MaterialReactTable
           columns={columns}

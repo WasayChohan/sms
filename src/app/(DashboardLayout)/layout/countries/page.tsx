@@ -1,17 +1,13 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-// import "./users.css";
-import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
-import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import Link from "next/link";
-import { IconBuildingTunnel } from "@tabler/icons-react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Card, CardHeader, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import Switch from "@mui/material/Switch";
+import { useMediaQuery } from "@mui/material";
 
 type country = {
   id: number;
@@ -21,11 +17,12 @@ type country = {
 
 function Countries() {
   const [countries, setCountries] = useState<country[]>([]);
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
     const fetchAllCountries = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/countries");
+        const res = await axios.get("http://localhost:8800/api/countries");
         setCountries(res.data);
       } catch (err) {
         console.error("Error fetching Countries:", err);
@@ -33,11 +30,10 @@ function Countries() {
     };
     fetchAllCountries();
   }, []);
-  console.log(countries);
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8800/countries/${id}`);
+      await axios.delete(`http://localhost:8800/api/countries/${id}`);
       setCountries((prev) => prev.filter((country) => country.id !== id));
     } catch (err) {
       console.error("Error deleting user:", err);
@@ -47,14 +43,10 @@ function Countries() {
   const handleToggleStatus = async (id: number, currentStatus: number) => {
     try {
       const newStatus = currentStatus === 0 ? 1 : 0;
-
       await axios.put(
-        `http://localhost:8800/countries/is_active/update/${id}`,
-        {
-          is_active: newStatus,
-        }
+        `http://localhost:8800/api/countries/is_active/update/${id}`,
+        { is_active: newStatus }
       );
-
       setCountries((prev) =>
         prev.map((country) =>
           country.id === id ? { ...country, is_active: newStatus } : country
@@ -70,18 +62,18 @@ function Countries() {
       {
         accessorKey: "id",
         header: "ID",
-        size: 330,
+        size: isSmallScreen ? 100 : 330,
         enableSorting: false,
       },
       {
         accessorKey: "name",
         header: "Name",
-        size: 330,
+        size: isSmallScreen ? 150 : 330,
       },
       {
         accessorKey: "is_active",
         header: "Status",
-        size: 330,
+        size: isSmallScreen ? 100 : 330,
         Cell: ({ row }) => (
           <Switch
             checked={row.original.is_active === 1}
@@ -96,24 +88,9 @@ function Countries() {
       {
         id: "actions",
         header: "Actions",
-        size: 135,
+        size: isSmallScreen ? 100 : 135,
         Cell: ({ row }) => (
           <div style={{ display: "flex", gap: "1px" }}>
-            {/* <Link href={`/layout/countries/viewCountries/${row.original.id}`}>
-              <button
-                style={{
-                  backgroundColor: "#ac8ad3",
-                  color: "#fff",
-                  border: "none",
-                  padding: "5px 5px",
-                  fontSize: "14px",
-                  cursor: "pointer",
-                  borderRadius: "4px",
-                }}
-              >
-                <VisibilityIcon />
-              </button>
-            </Link> */}
             <Link href={`countries/${row.original.id}`}>
               <button
                 style={{
@@ -121,7 +98,7 @@ function Countries() {
                   color: "#fff",
                   border: "none",
                   padding: "5px 5px",
-                  fontSize: "14px",
+                  fontSize: isSmallScreen ? "12px" : "14px",
                   cursor: "pointer",
                   borderRadius: "4px",
                 }}
@@ -136,7 +113,7 @@ function Countries() {
                 color: "#fff",
                 border: "none",
                 padding: "5px 5px",
-                fontSize: "14px",
+                fontSize: isSmallScreen ? "12px" : "14px",
                 cursor: "pointer",
                 borderRadius: "4px",
               }}
@@ -147,22 +124,22 @@ function Countries() {
         ),
       },
     ],
-    []
+    [isSmallScreen]
   );
 
   return (
     <div>
-      <div className="mb-3">
+      <div style={{ marginBottom: "16px" }}>
         <Link href="/layout/createCountry">
           <button
-            type="button"
-            className="btn "
             style={{
               padding: "10px 15px",
               fontSize: "14px",
               borderRadius: "4px",
               background: "#5D87FF",
               color: "#ffffff",
+              border: "none",
+              cursor: "pointer",
             }}
           >
             Add Country
@@ -171,31 +148,39 @@ function Countries() {
       </div>
 
       <Card>
-        <h4
-          style={{
-            // color: "#5A6A85",
-            padding: "10px 0 0 10px",
-          }}
-        >
-          {" "}
-          Countries List{" "}
-        </h4>
-        <MaterialReactTable
-          columns={columns}
-          data={countries}
-          enableSorting
-          enablePagination
-          enableColumnResizing
-          enableRowSelection={false}
-          muiTableBodyRowProps={{
-            hover: true,
-          }}
-          muiTablePaperProps={{
-            sx: {
-              paddingLeft: "16px",
-            },
-          }}
-        />
+        <h4 style={{ padding: "10px 0 0 10px" }}>Countries List</h4>
+        <div style={{ overflowX: "auto" }}>
+          <MaterialReactTable
+            columns={columns}
+            data={countries}
+            enableSorting
+            enablePagination
+            enableColumnResizing
+            enableRowSelection={false}
+            enableStickyHeader
+            enableDensityToggle
+            muiTableBodyRowProps={{ hover: true }}
+            muiTablePaperProps={{
+              sx: {
+                paddingLeft: "16px",
+                minWidth: isSmallScreen ? "100%" : "600px",
+              },
+            }}
+            initialState={{ pagination: { pageSize: 10, pageIndex: 0 } }}
+            muiTableBodyCellProps={{
+              sx: {
+                fontSize: isSmallScreen ? "12px" : "14px",
+                padding: isSmallScreen ? "8px" : "16px",
+              },
+            }}
+            muiTableHeadCellProps={{
+              sx: {
+                fontSize: isSmallScreen ? "12px" : "14px",
+                padding: isSmallScreen ? "8px" : "16px",
+              },
+            }}
+          />
+        </div>
       </Card>
     </div>
   );

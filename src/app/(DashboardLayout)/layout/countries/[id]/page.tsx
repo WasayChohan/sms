@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Update = () => {
   const [country, setCountry] = useState([]);
@@ -20,10 +20,12 @@ const Update = () => {
   }, []);
 
   const getCountry = () => {
-    axios.get(`http://localhost:8800/countries/ ${id}`).then(function (res) {
-      console.log(res.data[0]);
-      setCountry(res.data[0]);
-    });
+    axios
+      .get(`http://localhost:8800/api/countries/ ${id}`)
+      .then(function (res) {
+        console.log(res.data[0]);
+        setCountry(res.data[0]);
+      });
   };
 
   console.log(country);
@@ -42,7 +44,7 @@ const Update = () => {
     // return;
     try {
       await axios
-        .put(`http://localhost:8800/countries/update/${id}`, country)
+        .put(`http://localhost:8800/api/countries/update/${id}`, country)
         .then(function (res) {
           console.log(res.data);
           router.push("/layout/countries");

@@ -124,7 +124,7 @@ const CreateUser = () => {
     try {
       await validationSchema.validate(user, { abortEarly: false });
       console.log("Form submitted successfully");
-      await axios.post("http://localhost:8800/users", user);
+      await axios.post("http://localhost:8800/api/users", user);
       router.push("/layout/users");
     } catch (err: any) {
       if (err.inner) {

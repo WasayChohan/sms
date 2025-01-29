@@ -20,7 +20,7 @@ const Update = () => {
   }, []);
 
   const getUser = () => {
-    axios.get(`http://localhost:8800/users/ ${id}`).then(function (res) {
+    axios.get(`http://localhost:8800/api/users/ ${id}`).then(function (res) {
       console.log(res.data[0]);
       setUser(res.data[0]);
     });
@@ -56,7 +56,7 @@ const Update = () => {
     // return;
     try {
       await axios
-        .put(`http://localhost:8800/users/update/${id}`, user)
+        .put(`http://localhost:8800/api/users/update/${id}`, user)
         .then(function (res) {
           console.log(res.data);
           router.push("/layout/users");

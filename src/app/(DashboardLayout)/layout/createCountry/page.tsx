@@ -7,8 +7,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import Link from "next/link";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const CreateCountry = () => {
   const [country, setCountry] = useState({
@@ -55,7 +55,7 @@ const CreateCountry = () => {
     try {
       await validationSchema.validate(country, { abortEarly: false });
       console.log("Country Created successfully");
-      await axios.post("http://localhost:8800/countries", country);
+      await axios.post("http://localhost:8800/api/countries", country);
       router.push("/layout/countries");
     } catch (err: any) {
       if (err.inner) {

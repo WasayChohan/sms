@@ -25,7 +25,7 @@ function Cities() {
   useEffect(() => {
     const fetchAllCities = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/cities");
+        const res = await axios.get("http://localhost:8800/api/cities");
         setCities(res.data);
       } catch (err) {
         console.error("Error fetching cities:", err);
@@ -38,7 +38,7 @@ function Cities() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8800/cities/${id}`);
+      await axios.delete(`http://localhost:8800/api/cities/${id}`);
       setCities((prev) => prev.filter((cities) => cities.id !== id));
     } catch (err) {
       console.error("Error deleting cities:", err);
@@ -49,9 +49,12 @@ function Cities() {
     try {
       const newStatus = currentStatus === 0 ? 1 : 0;
 
-      await axios.put(`http://localhost:8800/cities/is_active/update/${id}`, {
-        is_active: newStatus,
-      });
+      await axios.put(
+        `http://localhost:8800/api/cities/is_active/update/${id}`,
+        {
+          is_active: newStatus,
+        }
+      );
 
       setCities((prev) =>
         prev.map((city) =>

@@ -33,7 +33,7 @@ const Update = () => {
 
   const getCity = async () => {
     try {
-      const res = await axios.get(`http://localhost:8800/cities/${id}`);
+      const res = await axios.get(`http://localhost:8800/api/cities/${id}`);
       const data = res.data[0];
       setCity({
         city_name: data.city_name,
@@ -47,7 +47,7 @@ const Update = () => {
 
   const getCountries = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/countries");
+      const res = await axios.get("http://localhost:8800/api/countries");
       setCountries(res.data);
     } catch (err) {
       console.error("Error fetching countries:", err);
@@ -57,7 +57,7 @@ const Update = () => {
   const getStatesByCountry = async (country_id) => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/states/by-country/${country_id}`
+        `http://localhost:8800/api/states/by-country/${country_id}`
       );
       setStates(res.data);
     } catch (err) {
@@ -74,7 +74,7 @@ const Update = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/cities/update/${id}`, city);
+      await axios.put(`http://localhost:8800/api/cities/update/${id}`, city);
       router.push("/layout/cities");
     } catch (err) {
       console.error("Error updating city:", err);
